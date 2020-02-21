@@ -5,8 +5,6 @@ namespace RMDesktopUI.Helpers
 {
     internal interface IAPIHelper
     {
-        Task<AuthenticatedUser> Authenticate(string username, string password); 
-        
-        //Task<object> GetValue();
+        Task<AuthenticatedUser> Authenticate(string username, string password);
     }
 }

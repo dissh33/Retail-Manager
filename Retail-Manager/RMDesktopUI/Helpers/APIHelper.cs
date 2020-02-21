@@ -57,26 +57,6 @@ namespace RMDesktopUI.Helpers
             }
         }
 
-        //public async Task<object> GetValue()
-        //{
-        //    ApiClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(
-        //        @"bearer QJCdeeRfRQ3xwn-wi7s929XeI_KJgIqlYtqVB6_fFYVdYIIOPVwTw3Jl7IWh1hTepJ93C0wNNbK7quvFmHv4GC8RADtktulrMwSXobhD8I6EyONcy3LAHi6hGMRpNepU8J9QcrBakc_VCDvOyc5ORoRS05hC8_J5ohClTq4eAMUDcW5N_0Hm_HUhKC_J-KnFRQ3BbYu0JV5ApxEKWX9pWEGgAa82w7M8aeklDtqAGIULBScb_7-S_ok5BNJSUQz59AK2FHkp2FVFDgLGX0cSYQsshkw5C5iztEthj44iYFmwfF5jJyJD2YBz4Tliy-npjW_7umVb6-ERTskPeMBf2duDTTxzd-YQpLHzK9KGsXT9znGDtS-1U9HqOcZ7TQ3qfhanutGr7IMAS-bdSt7eOBTeOEYSXuHd_JvooUbNc3_4a6Ox2JSMHpUaZO6yPcVrxqgRdKDEdfjCI8Nv7OZW7Goozt4hn8Dk1ObYphpdU_s");
-        //    using (HttpResponseMessage response = await ApiClient.GetAsync("/api/values"))
-        //    {
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var result = await response.Content.ReadAsAsync<object>();
-        //            var test = JsonConvert.SerializeObject(result);
-        //            return result; 
-        //        }
-        //        else
-        //        {
-        //            var result = await response.Content.ReadAsAsync<string>();
-        //            throw new Exception(response.ReasonPhrase);
-        //        }
-        //    }
-        //}
 
-        
     }
 }
