@@ -23,8 +23,8 @@
         </Grid.RowDefinitions>
 
         <!-- Title row-->
-        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 10"
-                   HorizontalAlignment="Center" FontSize="54" FontFamily="Candara Light"><Run Text="Login "/><Run Text="Form"/></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 100 0 15"
+                   HorizontalAlignment="Center" FontSize="64" FontFamily="Candara Light"><Run Text="Login "/><Run Text="Form"/></TextBlock>
 
         <!-- Username row-->
         <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 0 0 10">
@@ -40,7 +40,7 @@
         
         <!--Error message row-->
         <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Foreground="Red" 
-                   Margin="0 0 0 20" x:Name="ErrorMessage" FontSize="14"
+                   Margin="0 0 0 20" x:Name="ErrorMessage" FontSize="14" HorizontalAlignment="Center"
                    Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue = collapsed}"/>
         
 
