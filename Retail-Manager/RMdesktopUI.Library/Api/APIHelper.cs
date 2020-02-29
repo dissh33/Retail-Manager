@@ -16,6 +16,7 @@ namespace RMDesktopUI.Library.Api
         private HttpClient _apiClient;
         private ILoggedInUserModel _loggedInUser;
 
+
         public APIHelper(ILoggedInUserModel loggedInUser)
         {
             InitializeClient();
@@ -32,6 +33,7 @@ namespace RMDesktopUI.Library.Api
             _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        public HttpClient ApiClient => _apiClient;
 
         public async Task<AuthenticatedUser> Authenticate(string username, string password)
         {

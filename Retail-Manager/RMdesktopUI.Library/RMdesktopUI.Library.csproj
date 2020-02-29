@@ -50,13 +50,22 @@
   <ItemGroup>
     <Compile Include="Api\APIHelper.cs" />
     <Compile Include="Api\IAPIHelper.cs" />
+    <Compile Include="Api\IProductEndpoint.cs" />
+    <Compile Include="Api\ProductEndpoint.cs" />
     <Compile Include="Models\AuthenticatedUser.cs" />
     <Compile Include="Models\ILoggedInUserModel.cs" />
     <Compile Include="Models\LoggedInUserModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMDataManager.Library\RMDataManager.Library.csproj">
+      <Project>{18032952-7898-4468-96A5-B2E1D58AD723}</Project>
+      <Name>RMDataManager.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

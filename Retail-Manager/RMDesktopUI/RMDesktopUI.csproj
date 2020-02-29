@@ -138,6 +138,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RMDataManager.Library\RMDataManager.Library.csproj">
+      <Project>{18032952-7898-4468-96A5-B2E1D58AD723}</Project>
+      <Name>RMDataManager.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RMdesktopUI.Library\RMDesktopUI.Library.csproj">
       <Project>{265578e3-ba20-42c2-b097-a687dba7eaa2}</Project>
       <Name>RMDesktopUI.Library</Name>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RMDesktopUI.Views"
+             xmlns:models="clr-namespace:RMDesktopUI.Library.Models;assembly=RMdesktopUI.Library"
              mc:Ignorable="d" Background="White" FontSize="18" Foreground="#333"
              d:DesignHeight="700" d:DesignWidth="800">
     <Grid>
@@ -35,7 +36,13 @@
         <!--Col 1-->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="1" Padding="10 5"/>
         <ListBox x:Name="Products" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5" 
-                 MinHeight="300" MinWidth="50" MaxWidth="250"/>
+                 MinHeight="300" MinWidth="50">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:ProductModel">
+                    <TextBlock Text="{Binding ProductName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <DockPanel Grid.Column="1" Grid.Row="7" Margin="0 10 0 0" HorizontalAlignment="Center">
             <TextBlock Text="Quantity:" Margin="10 10 0 10"/>
