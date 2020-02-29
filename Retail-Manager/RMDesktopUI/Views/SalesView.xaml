@@ -24,7 +24,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="90"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
         <!--Col 1-->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="1" Padding="10 5"/>
         <ListBox x:Name="Products" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5" 
-                 MinHeight="300" MinWidth="50">
+                 MinHeight="300" MinWidth="50" SelectedItem="{Binding SelectedProduct}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="models:ProductModel">
@@ -76,21 +76,21 @@
         <!--Col 2-->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="3" Padding="10 5"/>
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="3" 
-                 MinHeight="150" MinWidth="150" MaxWidth="250">
+                 MinHeight="150" MinWidth="150">
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate DataType="models:ProductModel">
 
                     <StackPanel Orientation="Vertical" Margin="0 5">
 
                         <DockPanel Margin="0">
-                            <TextBlock Text="{Binding ProductName}" />
-                            <TextBlock Text="{Binding RetailPrice, StringFormat='{}{0:C}'}" FontWeight="Medium" Margin="10 0 0 5"/>
+                            <TextBlock Text="{Binding Product.ProductName}" />
+                            <TextBlock Text="{Binding Product.RetailPrice, StringFormat='{}{0:C}'}" FontWeight="Medium" Margin="10 0 0 5"/>
                         </DockPanel>
 
                         <DockPanel >
                             <StackPanel Orientation="Horizontal" Margin="0">
-                                <TextBlock Text="Quantity in stock: " FontSize="14"/>
-                                <TextBlock Text="{Binding QuantityInStock}" FontSize="14" />
+                                <TextBlock Text="Quantity in cart: " FontSize="14"/>
+                                <TextBlock Text="{Binding QuantityInCart}" FontSize="14" />
                             </StackPanel>
 
                             <!-- <TextBlock Text="Description" FontSize="14" Margin="20 0 0 0" /> -->
