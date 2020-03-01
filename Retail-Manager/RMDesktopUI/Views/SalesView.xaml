@@ -34,7 +34,7 @@
                    Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontFamily="Candara Light"/>
 
         <!--Col 1-->
-        <TextBlock Text="Items" Grid.Row="1" Grid.Column="1" Padding="10 5"/>
+        <TextBlock Text="Items" Grid.Row="1" Grid.Column="1" Padding="10 5" FontSize="24"/>
         <ListBox x:Name="Products" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5" 
                  MinHeight="300" MinWidth="50" SelectedItem="{Binding SelectedProduct}">
 
@@ -74,7 +74,7 @@
                 Grid.Column="1" Grid.Row="8" FontSize="14"/>
         
         <!--Col 2-->
-        <TextBlock Text="Cart" Grid.Row="1" Grid.Column="3" Padding="10 5"/>
+        <TextBlock Text="Cart" Grid.Row="1" Grid.Column="3" Padding="10 5" FontSize="24"/>
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="3" 
                  MinHeight="150" MinWidth="150">
             <ListBox.ItemTemplate>
@@ -113,8 +113,8 @@
         </DockPanel>
 
         <DockPanel Grid.Row="5"  Grid.Column="3" >
-            <TextBlock Text="Tax: "/>
-            <TextBlock x:Name="Tax" Text="$0.00" Grid.Row="3" 
+            <TextBlock Text="Discount: "/>
+            <TextBlock x:Name="Discount" Text="$0.00" Grid.Row="3" 
                    Grid.Column="2" TextAlignment="Right"/>
         </DockPanel>
 

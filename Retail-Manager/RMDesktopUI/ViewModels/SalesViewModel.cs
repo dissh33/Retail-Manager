@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace RMDesktopUI.ViewModels
 
         public BindingList<ProductModel> Products
         {
-            get => _products; 
+            get => _products;
             set
             {
                 _products = value;
@@ -53,7 +54,7 @@ namespace RMDesktopUI.ViewModels
                 _cart = value;
                 NotifyOfPropertyChange(() => Cart);
             }
-        }  
+        }
 
         public int ItemQuantity
         {
@@ -84,35 +85,57 @@ namespace RMDesktopUI.ViewModels
         {
             get
             {
-                decimal subTotal = 0;
-
-                foreach (var item in Cart)
-                {
-                    subTotal += item.Product.RetailPrice * item.QuantityInCart;
-                }
-
+                decimal subTotal = CalculateSubTotal();
                 return subTotal.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
             }
         }
-        public string Tax
+
+        public string Discount
         {
             get
             {
-                // TODO - Replace with calculation
-                return "$0.00";
+                decimal discountAmount = CalculateDiscount();
+                return discountAmount.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
             }
         }
+
         public string Total
         {
             get
             {
-                // TODO - Replace with calculation
-                return "$0.00";
+                decimal total = CalculateSubTotal() - CalculateDiscount();
+                return total.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
             }
         }
 
+        private decimal CalculateSubTotal()
+        {
+            return Cart.Sum(item => item.Product.RetailPrice * item.QuantityInCart);
+        }
 
-        public bool CanAddToCart
+        private decimal CalculateDiscount()
+        {
+            decimal subTotal = CalculateSubTotal();
+            if (subTotal > 50M)
+            {
+                return subTotal * 0.2M;
+            }
+            else if (subTotal > 25M)
+            {
+                return subTotal * 0.1M;
+            }
+            else if (subTotal > 10M)
+            {
+                return subTotal * 0.05M;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    
+
+    public bool CanAddToCart
         {
             get
             {
@@ -145,6 +168,8 @@ namespace RMDesktopUI.ViewModels
             SelectedProduct.QuantityInStock -= ItemQuantity;
             ItemQuantity = 1;
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Discount);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanRemoveFromCart
@@ -162,6 +187,8 @@ namespace RMDesktopUI.ViewModels
         public void RemoveFromCart()
         {
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Discount);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanCheckOut
