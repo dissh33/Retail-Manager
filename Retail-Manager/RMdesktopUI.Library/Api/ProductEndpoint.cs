@@ -11,15 +11,15 @@ namespace RMDesktopUI.Library.Api
 {
     public class ProductEndpoint : IProductEndpoint
     {
-        private readonly IAPIHelper _apiHelper;
-        public ProductEndpoint(IAPIHelper apiHelper)
+        private readonly IApiClientInitializer _apiClientInitializer;
+        public ProductEndpoint(IApiClientInitializer apiClientInitializer)
         {
-            _apiHelper = apiHelper;
+            _apiClientInitializer = apiClientInitializer;
         }
 
         public async Task<List<ProductModel>> GetAll()
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/product"))
+            using (HttpResponseMessage response = await _apiClientInitializer.ApiClient.GetAsync("/api/product"))
             {
                 if (response.IsSuccessStatusCode)
                 {

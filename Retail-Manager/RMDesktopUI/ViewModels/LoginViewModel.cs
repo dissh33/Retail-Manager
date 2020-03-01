@@ -13,13 +13,13 @@ namespace RMDesktopUI.ViewModels
     {
         private string _userName;
         private string _password;
-        private readonly IAPIHelper _apiHelper;
+        private readonly IAuthentication _authentication;
         private string _errorMessage;
         private readonly IEventAggregator _events;
 
-        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
+        public LoginViewModel(IAuthentication authentication, IEventAggregator events)
         {
-            _apiHelper = apiHelper;
+            _authentication = authentication;
             _events = events;
         }
 
@@ -82,9 +82,9 @@ namespace RMDesktopUI.ViewModels
             try
             {
                 ErrorMessage = "";
-                var result = await _apiHelper.Authenticate(UserName, Password);
+                var result = await _authentication.Authenticate(UserName, Password);
 
-                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+                await _authentication.GetLoggedInUserInfo(result.Access_Token);
 
                 _events.PublishOnUIThread(new LogOnEvent());
             }

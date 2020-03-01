@@ -1,12 +1,10 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using RMDesktopUI.Library.Models;
 
 namespace RMDesktopUI.Library.Api
 {
-    public interface IAPIHelper
+    public interface IAuthentication
     {
-        HttpClient ApiClient { get; }
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLoggedInUserInfo(string token);
     }

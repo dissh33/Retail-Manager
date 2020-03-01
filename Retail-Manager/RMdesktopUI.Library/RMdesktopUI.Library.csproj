@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\APIHelper.cs" />
-    <Compile Include="Api\IAPIHelper.cs" />
+    <Compile Include="Api\ApiClientInitializer.cs" />
+    <Compile Include="Api\Authentication.cs" />
+    <Compile Include="Api\IApiClientInitializer.cs" />
+    <Compile Include="Api\IAuthentication.cs" />
     <Compile Include="Api\IProductEndpoint.cs" />
     <Compile Include="Api\ProductEndpoint.cs" />
     <Compile Include="Models\AuthenticatedUser.cs" />
@@ -67,6 +69,9 @@
       <Project>{18032952-7898-4468-96A5-B2E1D58AD723}</Project>
       <Name>RMDataManager.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
