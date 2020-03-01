@@ -116,12 +116,7 @@ namespace RMDesktopUI.ViewModels
         {
             get
             {
-                bool output = false;
-
-                if (ItemQuantity > 0 && SelectedProduct?.QuantityInStock >= ItemQuantity)
-                {
-                    output = true;
-                }
+                bool output = ItemQuantity > 0 && SelectedProduct?.QuantityInStock >= ItemQuantity;
 
                 return output;
             }
