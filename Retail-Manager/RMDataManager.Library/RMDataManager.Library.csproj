@@ -46,9 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessLogic\ProductData.cs" />
+    <Compile Include="DataAccessLogic\SaleData.cs" />
     <Compile Include="DataAccessLogic\UserData.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
+    <Compile Include="Models\DbModels\DbSaleDetailModel.cs" />
+    <Compile Include="Models\DbModels\DbSaleModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\SaleDetailModel.cs" />
+    <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

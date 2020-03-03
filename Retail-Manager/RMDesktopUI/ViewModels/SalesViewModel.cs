@@ -18,10 +18,12 @@ namespace RMDesktopUI.ViewModels
         private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
         private int _itemQuantity = 1;
         private readonly IProductEndpoint _productEndpoint;
+        private readonly ISaleEndpoint _saleEndpoint;
 
-        public SalesViewModel(IProductEndpoint productEndpoint)
+        public SalesViewModel(IProductEndpoint productEndpoint, ISaleEndpoint saleEndpoint)
         {
             _productEndpoint = productEndpoint;
+            _saleEndpoint = saleEndpoint;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -112,13 +114,12 @@ namespace RMDesktopUI.ViewModels
         {
             return Cart.Sum(item => item.Product.RetailPrice * item.QuantityInCart);
         }
-
         private decimal CalculateDiscount()
         {
             decimal subTotal = CalculateSubTotal();
             if (subTotal > 50M)
             {
-                return subTotal * 0.2M;
+                return subTotal * 0.15M;
             }
             else if (subTotal > 25M)
             {
@@ -167,9 +168,11 @@ namespace RMDesktopUI.ViewModels
 
             SelectedProduct.QuantityInStock -= ItemQuantity;
             ItemQuantity = 1;
+
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Discount);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanRemoveFromCart
@@ -189,22 +192,34 @@ namespace RMDesktopUI.ViewModels
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Discount);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
         public bool CanCheckOut
         {
             get
             {
-                bool output = false;
-
-                //Make sure something is in the cart
+                bool output = Cart.Count > 0;
 
                 return output;
             }
         }
-        public void CheckOut()
+        public async Task CheckOut()
         {
+            SaleModel sale = new SaleModel();
 
+            foreach (var item in Cart)
+            {
+                sale.SaleDetails.Add(new SaleDetailModel
+                {
+                    ProductId = item.Product.Id,
+                    Quantity = item.QuantityInCart
+                });
+            }
+
+            sale.Discount = CalculateDiscount();
+
+            await _saleEndpoint.PostSale(sale);
         }
 
     }

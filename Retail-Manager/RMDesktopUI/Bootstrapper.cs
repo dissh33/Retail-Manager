@@ -32,7 +32,9 @@ namespace RMDesktopUI
         {
             _container.Instance(_container);
 
-            _container.PerRequest<IProductEndpoint, ProductEndpoint>();
+            _container
+                .PerRequest<IProductEndpoint, ProductEndpoint>()
+                .PerRequest<ISaleEndpoint, SaleEndpoint>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
