@@ -11,15 +11,15 @@ namespace RMDesktopUI.ViewModels
 {
     class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
-        private SalesViewModel _salesViewModel;
+        private readonly SalesViewModel _salesViewModel;
 
-        public ShellViewModel(IEventAggregator events, SimpleContainer container, SalesViewModel salesViewModel)
+        public ShellViewModel(IEventAggregator events , SalesViewModel salesViewModel)
         {
             _salesViewModel = salesViewModel;
 
             events.Subscribe(this);
 
-            ActivateItem(container.GetInstance<LoginViewModel>());
+            ActivateItem(IoC.Get<LoginViewModel>());
         }
 
         public sealed override void ActivateItem(object item)
