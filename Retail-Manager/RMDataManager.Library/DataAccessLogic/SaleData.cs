@@ -39,7 +39,7 @@ namespace RMDataManager.Library.DataAccessLogic
                 details.Add(detail);
             }
 
-            // Create the Sale mode
+            // Create the Sale model
             DbSaleModel sale = new DbSaleModel
             {
                 SubTotal = details.Sum(x => x.PurchasePrice),
@@ -58,7 +58,6 @@ namespace RMDataManager.Library.DataAccessLogic
 
             decimal discountPercent = (sale.Discount * 100) / sale.SubTotal;
 
-            // Finish filling in the sale detail models
             foreach (var item in details)
             {
                 item.SaleId = sale.Id;
