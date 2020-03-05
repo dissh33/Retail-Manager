@@ -30,7 +30,7 @@
         </Grid.ColumnDefinitions>
 
         <!--Header-->
-        <TextBlock Text="Sales Page" FontSize="50" Margin="20 10 0 15" 
+        <TextBlock Text="Sales Page" FontSize="50" Margin="10 10 0 25" 
                    Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0" FontFamily="Candara Light"/>
 
         <!--Col 1-->
@@ -76,7 +76,7 @@
         <!--Col 2-->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="3" Padding="10 5" FontSize="24"/>
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="3" 
-                 MinHeight="150" MinWidth="150">
+                 MinHeight="150" MinWidth="150" SelectedItem="{Binding SelectedCartItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="models:ProductModel">
 
