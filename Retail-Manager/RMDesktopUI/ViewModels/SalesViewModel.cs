@@ -241,6 +241,20 @@ namespace RMDesktopUI.ViewModels
             sale.Discount = CalculateDiscount();
 
             await _saleEndpoint.PostSale(sale);
+
+            await ResetSalesViewModel();
+        }
+
+        private async Task ResetSalesViewModel()
+        {
+            Cart = new BindingList<CartItemDisplayModel>();
+            
+            await LoadProducts();
+
+            NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Discount);
+            NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
         }
 
     }

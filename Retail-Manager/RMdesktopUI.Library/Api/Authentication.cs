@@ -11,12 +11,12 @@ namespace RMDesktopUI.Library.Api
 {
     public class Authentication : IAuthentication
     {
-        private readonly IApiClientInitializer _apiHelper;
+        private readonly IApiClientInitializer _apiClientInitializer;
         private readonly ILoggedInUserModel _loggedInUser;
 
         public Authentication(IApiClientInitializer apiClientInitializer, ILoggedInUserModel loggedInUser)
         {
-            _apiHelper = apiClientInitializer;
+            _apiClientInitializer = apiClientInitializer;
             _loggedInUser = loggedInUser;
         }
 
@@ -30,7 +30,7 @@ namespace RMDesktopUI.Library.Api
             });
 
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsync("/Token", data))
+            using (HttpResponseMessage response = await _apiClientInitializer.ApiClient.PostAsync("/Token", data))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -46,12 +46,12 @@ namespace RMDesktopUI.Library.Api
 
         public async Task GetLoggedInUserInfo(string token)
         {
-            _apiHelper.ApiClient.DefaultRequestHeaders.Clear();
-            _apiHelper.ApiClient.DefaultRequestHeaders.Accept.Clear();
-            _apiHelper.ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _apiHelper.ApiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+            _apiClientInitializer.ApiClient.DefaultRequestHeaders.Clear();
+            _apiClientInitializer.ApiClient.DefaultRequestHeaders.Accept.Clear();
+            _apiClientInitializer.ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _apiClientInitializer.ApiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
 
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/user"))
+            using (HttpResponseMessage response = await _apiClientInitializer.ApiClient.GetAsync("/api/user"))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,5 +70,6 @@ namespace RMDesktopUI.Library.Api
                 }
             }
         }
+
     }
 }

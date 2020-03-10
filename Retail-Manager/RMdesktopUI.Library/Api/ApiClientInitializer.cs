@@ -31,5 +31,9 @@ namespace RMDesktopUI.Library.Api
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        public void ClearHeaders()
+        {
+            ApiClient.DefaultRequestHeaders.Accept.Clear();
+        }
     }
 }
