@@ -49,22 +49,37 @@ namespace RMDataManager.Library.DataAccessLogic
 
             sale.Total = sale.SubTotal - sale.Discount;
 
-            // Save the sale model
-            SqlDataAccess sql = new SqlDataAccess();
-            sql.SaveData<DbSaleModel>("dbo.spSale_Insert", sale, "RMData");
-
-            // Get id from sale model
-            sale.Id = sql.LoadData<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }, "RMData").FirstOrDefault();
-
-            decimal discountPercent = (sale.Discount * 100) / sale.SubTotal;
-
-            foreach (var item in details)
+            // Save the sale model in Transaction
+            using (SqlDataAccess sql = new SqlDataAccess())
             {
-                item.SaleId = sale.Id;
-                item.Discount = (item.PurchasePrice/100) * discountPercent;
+                try
+                {
+                    sql.StartTransaction("RMData");
 
-                //Save the sale details models
-                sql.SaveData("dbo.spSaleDetail_Insert", item, "RMData");
+                    sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
+
+                    // Get id from sale model
+                    sale.Id = sql.LoadDataInTransaction<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }).FirstOrDefault();
+
+                    //Calculate Discount
+                    decimal discountPercent = (sale.Discount * 100) / sale.SubTotal;
+
+                    foreach (var item in details)
+                    {
+                        item.SaleId = sale.Id;
+                        item.Discount = (item.PurchasePrice / 100) * discountPercent;
+
+                        //Save the sale details models
+                        sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
+                    }
+
+                    sql.CommitTransaction();
+                }
+                catch (Exception)
+                {
+                    sql.RollbackTransaction();
+                    throw;
+                }
             }
         }
 
