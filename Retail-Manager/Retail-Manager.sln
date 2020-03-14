@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMDataManager.Library", "RM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMDesktopUI.Library", "RMdesktopUI.Library\RMDesktopUI.Library.csproj", "{265578E3-BA20-42C2-B097-A687DBA7EAA2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{BBD22154-4A32-4AB1-B254-F54ACF50CD3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{7B94BE13-E3A7-40B3-A6AB-191615DA7F83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77CED772-742D-4FAF-9511-F94AE94FB072} = {BBD22154-4A32-4AB1-B254-F54ACF50CD3C}
+		{61DC57C6-0DBC-40BB-B9A5-096E1EA07911} = {7B94BE13-E3A7-40B3-A6AB-191615DA7F83}
+		{18032952-7898-4468-96A5-B2E1D58AD723} = {BBD22154-4A32-4AB1-B254-F54ACF50CD3C}
+		{265578E3-BA20-42C2-B097-A687DBA7EAA2} = {7B94BE13-E3A7-40B3-A6AB-191615DA7F83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D88188A0-D95D-4F70-995D-728167F52D02}

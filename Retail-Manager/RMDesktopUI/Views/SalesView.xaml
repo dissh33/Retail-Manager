@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RMDesktopUI.Views"
-             xmlns:models="clr-namespace:RMDesktopUI.Library.Models;assembly=RMdesktopUI.Library"
+             xmlns:models="clr-namespace:RMDesktopUI.Library.Models;assembly=RMDesktopUI.Library"
              mc:Ignorable="d" Background="White" FontSize="18" Foreground="#333"
              d:DesignHeight="700" d:DesignWidth="800">
     <Grid>
