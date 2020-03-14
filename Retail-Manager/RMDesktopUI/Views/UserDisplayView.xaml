@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RMDesktopUI.Views"
-             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" 
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="1000" 
              Background="White" FontSize="18">
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +35,7 @@
         <TextBlock Text="Users" Grid.Row="1" Grid.Column="1" Padding="10 5" FontSize="24"/>
 
         <ListBox x:Name="Users" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5"
-                 MinHeight="150" MinWidth="200" SelectedItem="">
+                 MinHeight="150" MinWidth="360" SelectedItem="{Binding SelectedUser}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -57,28 +57,27 @@
         <TextBlock Text="User Roles" Grid.Row="1" Grid.Column="3" Padding="10 5" FontSize="24" Grid.ColumnSpan="2"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="0 5">
-            <TextBlock Text="User :" Padding="10 5" Width="140" />
-            <TextBlock Text="FirstName LastName" Padding="10 5" />
+            <TextBlock Text="User :" Padding="10 5" />
+            <TextBlock Text="{Binding SelectedUserName}" Padding="10 5" FontWeight="Medium" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0 5">
             <TextBlock Text="Roles :" Padding="10 5" Width="140"/>
 
-            <ListBox x:Name="UserRoles" MinHeight="60" MinWidth="200" SelectedItem="">
-            </ListBox>
+            <ListBox x:Name="UsersRoles" MinHeight="35" MinWidth="220" SelectedItem="{Binding SelectedUsersRoleToRemove}" />
         </StackPanel>
 
-        <Button Grid.Row="4" Grid.Column="4" x:Name="RemoveRole" Content="Remove Role" FontSize="16" Width="130" 
+        <Button x:Name="RemoveSelectedRole" Grid.Row="4" Grid.Column="4" Content="Remove Role" FontSize="16" Width="130" 
                 Margin="0 5 0 10" Padding="10 5" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
 
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Margin="0 5">
             <TextBlock Text="Add new Role :" Padding="10 5" Width="140" />
-            <ComboBox MinWidth="200" ></ComboBox>
+            <ComboBox x:Name="AvailableRoles" MinWidth="220" Background="White" SelectedItem="{Binding SelectedAvailableRoleToAdd}"/>
         </StackPanel>
 
 
-        <Button x:Name="AddRole" Grid.Row="6" Grid.Column="4" Content="Add Role" FontSize="16" Width="130" 
+        <Button x:Name="AddSelectedRole" Grid.Row="6" Grid.Column="4" Content="Add Role" FontSize="16" Width="130" 
                     Margin="0 5 0 0" Padding="10 5" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
     </Grid>

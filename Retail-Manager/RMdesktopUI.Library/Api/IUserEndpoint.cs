@@ -7,5 +7,8 @@ namespace RMDesktopUI.Library.Api
     public interface IUserEndpoint
     {
         Task<List<UserModel>> GetAll();
+        Task<Dictionary<string, string>> GetAllRoles();
+        Task AddUserToRole(UserRolePairModel pairing);
+        Task RemoveUserFromRole(UserRolePairModel pairing);
     }
 }
