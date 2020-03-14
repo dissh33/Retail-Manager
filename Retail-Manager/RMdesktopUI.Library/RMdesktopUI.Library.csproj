@@ -7,7 +7,7 @@
     <ProjectGuid>{265578E3-BA20-42C2-B097-A687DBA7EAA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RMdesktopUI.Library</RootNamespace>
+    <RootNamespace>RMDesktopUI.Library</RootNamespace>
     <AssemblyName>RMDesktopUI.Library</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -54,8 +54,10 @@
     <Compile Include="Api\IAuthentication.cs" />
     <Compile Include="Api\IProductEndpoint.cs" />
     <Compile Include="Api\ISaleEndpoint.cs" />
+    <Compile Include="Api\IUserEndpoint.cs" />
     <Compile Include="Api\ProductEndpoint.cs" />
     <Compile Include="Api\SaleEndpoint.cs" />
+    <Compile Include="Api\UserEndpoint.cs" />
     <Compile Include="Models\AuthenticatedUser.cs" />
     <Compile Include="Models\CartItemModel.cs" />
     <Compile Include="Models\ILoggedInUserModel.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\SaleDetailModel.cs" />
     <Compile Include="Models\SaleModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

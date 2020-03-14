@@ -28,6 +28,10 @@ namespace RMDesktopUI.ViewModels
 
             ActivateItem(IoC.Get<LoginViewModel>());
         }
+        public void UserManagement()
+        {
+            ActivateItem(IoC.Get<UserDisplayViewModel>());
+        }
 
         public sealed override void ActivateItem(object item)
         {

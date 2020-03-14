@@ -35,15 +35,17 @@
         <TextBlock Text="Users" Grid.Row="1" Grid.Column="1" Padding="10 5" FontSize="24"/>
 
         <ListBox x:Name="Users" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5"
-                 MinHeight="150" MinWidth="200" SelectedItem="{Binding }">
+                 MinHeight="150" MinWidth="200" SelectedItem="">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text ="{Binding DisplayName}" />
-                        <TextBlock Text="{Binding Email}" />
-                        <TextBlock Text="{Binding RoleList}" FontSize="16" />
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="{Binding UserName}" />
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Roles: " FontSize="14"/>
+                            <TextBlock Text="{Binding RoleList}" FontSize="14" />
+                        </StackPanel>
                     </StackPanel>
 
                 </DataTemplate>
@@ -62,7 +64,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0 5">
             <TextBlock Text="Roles :" Padding="10 5" Width="140"/>
 
-            <ListBox x:Name="UserRoles" MinHeight="60" MinWidth="200" SelectedItem="{Binding }">
+            <ListBox x:Name="UserRoles" MinHeight="60" MinWidth="200" SelectedItem="">
             </ListBox>
         </StackPanel>
 
