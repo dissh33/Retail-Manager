@@ -36,7 +36,7 @@
         <!--Col 1-->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="1" Padding="10 5" FontSize="24"/>
         <ListBox x:Name="Products" Grid.Row="2" Grid.Column="1" Grid.RowSpan="5" 
-                 MinHeight="300" MinWidth="50" SelectedItem="{Binding SelectedProduct}">
+                 MinHeight="300" MinWidth="250" SelectedItem="{Binding SelectedProduct}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="models:ProductModel">
@@ -73,10 +73,11 @@
                 Padding="10 5" Background="White" HorizontalAlignment="Center"
                 Grid.Column="1" Grid.Row="8" FontSize="14"/>
         
-        <!--Col 2-->
+        <!--Col 3-->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="3" Padding="10 5" FontSize="24"/>
+
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="3" 
-                 MinHeight="150" MinWidth="150" SelectedItem="{Binding SelectedCartItem}">
+                 MinHeight="150" MinWidth="250" SelectedItem="{Binding SelectedCartItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="models:ProductModel">
 
