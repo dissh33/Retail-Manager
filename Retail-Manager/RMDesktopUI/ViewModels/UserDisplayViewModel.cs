@@ -52,7 +52,7 @@ namespace RMDesktopUI.ViewModels
 
                 if (ex.Message.Equals("Unauthorized"))
                 {
-                    _status.UpdateMessage("Unauthorized Access", "You do not have the permission to interact with the Sales Form.");
+                    _status.UpdateMessage("Access is denied", "You do not have the permission to interact with the Users Form.");
                     _window.ShowDialog(_status, null, settings);
                 }
                 else
@@ -82,8 +82,8 @@ namespace RMDesktopUI.ViewModels
             {
                 _selectedUser = value;
                 SelectedUserName = value.UserName;
-                UsersRoles = new BindingList<string>(value.Roles.Select(x => x.Value).ToList()); 
-                LoadRoles();        //This needs to be awaited - to be addressed later
+                UsersRoles = new BindingList<string>(value.Roles.Select(x => x.Value).ToList());
+                _ = LoadRoles();        //This needs to be awaited 
 
                 NotifyOfPropertyChange(() => SelectedUser);
             }
@@ -143,7 +143,7 @@ namespace RMDesktopUI.ViewModels
             Users = new BindingList<UserModel>(userList);
         }
 
-        private async void LoadRoles()
+        private async Task LoadRoles()
         {
             var roles = await _userEndpoint.GetAllRoles();
             _availableRoles.Clear();

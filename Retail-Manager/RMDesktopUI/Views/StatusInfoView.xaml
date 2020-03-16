@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RMDesktopUI.Views" mc:Ignorable="d"
-        Height="450" Width="800" Background="White" Foreground="#333">
+        Background="White" Foreground="#333">
     <Grid>
         <StackPanel Orientation="Vertical" >
-            <TextBlock x:Name="Header" FontSize="20" FontFamily="Candara Light" Margin="10" />
-            <TextBlock x:Name="Message" FontSize="18" Margin="10" />
-            <Button x:Name="Close" FontSize="18" Margin="20" Padding="20 5" Background="White" BorderBrush="#333" 
+            <TextBlock x:Name="Header" FontSize="28" FontFamily="Candara Light" Margin="10 5" />
+            <TextBlock x:Name="Message" FontSize="18" Margin="10 5" />
+            <Button x:Name="Close" FontSize="18" Margin="20 15" Padding="20 5" Background="White" BorderBrush="#333" 
                     Foreground="#333" HorizontalAlignment="Center">Close</Button>
         </StackPanel>
     </Grid>
