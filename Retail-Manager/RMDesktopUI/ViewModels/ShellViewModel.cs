@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using RMDesktopUI.EventModels;
 using RMDesktopUI.Library.Api;
@@ -24,23 +25,25 @@ namespace RMDesktopUI.ViewModels
             _user = user;
             _apiClientInitializer = apiClientInitializer;
 
-            events.Subscribe(this);
+            events.SubscribeOnUIThread(this);
 
-            ActivateItem(IoC.Get<LoginViewModel>());
-        }
-        public void UserManagement()
-        {
-            ActivateItem(IoC.Get<UserDisplayViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>(), CancellationToken.None);
         }
 
-        public sealed override void ActivateItem(object item)
+        public sealed override Task ActivateItemAsync(object item, CancellationToken cancellationToken)
         {
-            base.ActivateItem(item);
+            return base.ActivateItemAsync(item, cancellationToken);
         }
 
-        public void Handle(LogOnEvent message)
+        public async void UserManagement()
         {
-            ActivateItem(_salesViewModel);
+            await ActivateItemAsync(IoC.Get<UserDisplayViewModel>(), CancellationToken.None);
+        }
+
+
+        public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
+        {
+            await ActivateItemAsync(_salesViewModel, cancellationToken);
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
 
@@ -54,18 +57,18 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        public void LogOut()
+        public async void LogOut()
         {
             _user.ResetUserModel();
             _apiClientInitializer.ClearHeaders();
 
-            ActivateItem(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>(), CancellationToken.None);
             NotifyOfPropertyChange(() => IsLoggedIn);
         }
 
-        public void ExitApplication()
+        public async void ExitApplication()
         {
-            TryClose();
+            await TryCloseAsync();
         }
     }
 }

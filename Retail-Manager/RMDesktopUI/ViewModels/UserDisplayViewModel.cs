@@ -53,15 +53,15 @@ namespace RMDesktopUI.ViewModels
                 if (ex.Message.Equals("Unauthorized"))
                 {
                     _status.UpdateMessage("Access is denied", "You do not have the permission to interact with the Users Form.");
-                    _window.ShowDialog(_status, null, settings);
+                    await _window.ShowDialogAsync(_status, null, settings);
                 }
                 else
                 {
                     _status.UpdateMessage("Fatal Exception", ex.Message);
-                    _window.ShowDialog(_status, null, settings);
+                    await _window.ShowDialogAsync(_status, null, settings);
                 }
 
-                TryClose();
+                await TryCloseAsync();
             }
         }
 
