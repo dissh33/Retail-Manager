@@ -40,7 +40,7 @@ namespace RMDataApi.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminRole")]
         [HttpGet]
         [Route("Admin/GetAllUsers")]
         public List<ApplicationUserModel> GetAllUsers()
@@ -69,7 +69,7 @@ namespace RMDataApi.Controllers
             return output;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminRole")]
         [HttpGet]
         [Route("Admin/GetAllRoles")]
         public Dictionary<string, string> GetAllRoles()
@@ -78,7 +78,7 @@ namespace RMDataApi.Controllers
             return roles;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminRole")]
         [HttpPost]
         [Route("Admin/AddRole")]
         public async Task AddARole(UserRolePairModel pairing)
@@ -87,7 +87,7 @@ namespace RMDataApi.Controllers
             await _userManager.AddToRoleAsync(user, pairing.RoleName);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "AdminRole")]
         [HttpPost]
         [Route("Admin/RemoveRole")]
         public async Task RemoveARole(UserRolePairModel pairing)

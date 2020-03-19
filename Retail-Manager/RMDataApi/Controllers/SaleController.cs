@@ -16,6 +16,7 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class SaleController : ControllerBase
     {
+        [Authorize(Policy = "CashierRole")]
         [HttpPost]
         public void Post(SaleModel sale)
         {
@@ -26,6 +27,7 @@ namespace RMDataApi.Controllers
             data.SaveSale(sale, userId);
         }
 
+        [Authorize(Policy = "AdminRole,ManagerRole")]
         [Route("GetSalesReport")] 
         [HttpGet]
         public List<SaleReportModel> GetSalesReport()

@@ -12,7 +12,7 @@ namespace RMDataApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy="AdminRole,ManagerRole")]
     public class InventoryController : ControllerBase
     {
         [HttpGet]

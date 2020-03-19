@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -62,6 +63,13 @@ namespace RMDataApi
                         ClockSkew = TimeSpan.FromMinutes(5)
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminRole", policyBuilder => policyBuilder.RequireRole("Admin"));
+                options.AddPolicy("ManagerRole", policyBuilder => policyBuilder.RequireRole("Manager"));
+                options.AddPolicy("CashierRole", policyBuilder => policyBuilder.RequireRole("Cashier"));
+            });
 
             services.AddSwaggerGen(setup =>
             {
