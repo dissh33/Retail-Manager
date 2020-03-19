@@ -16,6 +16,7 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class SaleController : ControllerBase
     {
+        [HttpPost]
         public void Post(SaleModel sale)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -25,7 +26,8 @@ namespace RMDataApi.Controllers
             data.SaveSale(sale, userId);
         }
 
-        [Route("api/GetSalesReport")]
+        [Route("GetSalesReport")] 
+        [HttpGet]
         public List<SaleReportModel> GetSalesReport()
         {
             SaleData data = new SaleData();

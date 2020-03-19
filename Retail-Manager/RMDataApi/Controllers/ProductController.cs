@@ -15,6 +15,7 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
+        [HttpGet]
         public List<ProductModel> Get()
         {
             ProductData data = new ProductData();

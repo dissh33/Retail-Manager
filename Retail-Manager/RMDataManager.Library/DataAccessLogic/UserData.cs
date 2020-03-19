@@ -10,11 +10,12 @@ namespace RMDataManager.Library.DataAccessLogic
 {
     public class UserData
     {
-        public List<UserModel> GetUserById(string Id)
+
+        public List<UserModel> GetUserById(string id)
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id }, "RMData");
+            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id = id }, "RMData");
 
             return output;
         }

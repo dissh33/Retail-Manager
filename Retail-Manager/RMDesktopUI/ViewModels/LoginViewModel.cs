@@ -12,7 +12,7 @@ namespace RMDesktopUI.ViewModels
     class LoginViewModel : Screen
     {
         private string _userName = "dissh@admin.com";
-        private string _password = "Qwer1234";
+        private string _password = "Qwer1234.";
         private readonly IAuthentication _authentication;
         private string _errorMessage;
         private readonly IEventAggregator _events;

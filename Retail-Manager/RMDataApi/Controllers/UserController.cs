@@ -20,7 +20,7 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
         public UserController(ApplicationDbContext applicationDbContext, UserManager<IdentityUser> userManager)
@@ -48,10 +48,10 @@ namespace RMDataApi.Controllers
             List<ApplicationUserModel> output = new List<ApplicationUserModel>();
          
             var users = _context.Users.ToList();
-            var userRoles = from ur in _context.UserRoles
-                            join r in _context.Roles on ur.RoleId equals r.Id
-                            select new { ur.UserId, ur.RoleId, r.Name };  //TODO: LINQ
-           
+          
+            var userRoles = _context.UserRoles.Join(_context.Roles, ur => ur.RoleId, r => r.Id,
+                (ur, r) => new {ur.UserId, ur.RoleId, r.Name});
+
             foreach (var user in users)
             {
                 ApplicationUserModel u = new ApplicationUserModel
@@ -92,7 +92,7 @@ namespace RMDataApi.Controllers
         [Route("Admin/RemoveRole")]
         public async Task RemoveARole(UserRolePairModel pairing)
         {
-            var user = await _userManager.FindByNameAsync(pairing.UserId);
+            var user = await _userManager.FindByIdAsync(pairing.UserId);
             await _userManager.RemoveFromRoleAsync(user, pairing.RoleName);
         }
 

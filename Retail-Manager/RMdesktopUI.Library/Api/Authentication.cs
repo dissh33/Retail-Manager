@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RMDesktopUI.Library.Models;
 
 namespace RMDesktopUI.Library.Api
@@ -22,15 +23,17 @@ namespace RMDesktopUI.Library.Api
 
         public async Task<AuthenticatedUser> Authenticate(string username, string password)
         {
-            var data = new FormUrlEncodedContent(new[]
+            var data = JsonConvert.SerializeObject(new
             {
-                new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("username", username),
-                new KeyValuePair<string, string>("password", password)
+                Grant_Type = "password",
+                UserName = username,
+                Password = password
             });
 
+            var buffer = Encoding.UTF8.GetBytes(data);
+            var byteContent = new ByteArrayContent(buffer);
 
-            using (HttpResponseMessage response = await _apiClientInitializer.ApiClient.PostAsync("/Token", data))
+            using (HttpResponseMessage response = await _apiClientInitializer.ApiClient.PostAsync("/token", byteContent))
             {
                 if (response.IsSuccessStatusCode)
                 {
