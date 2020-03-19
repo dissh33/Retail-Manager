@@ -16,7 +16,7 @@ using RMDataApi.Models;
 
 namespace RMDataApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("token")]
     [ApiController]
     public class TokenController : ControllerBase
     {
@@ -29,29 +29,26 @@ namespace RMDataApi.Controllers
             _userManager = userManager;
         }
 
-        [Route("/token")]
         [HttpPost]
         public async Task<IActionResult> Create(string username, string password, string grant_type)
         {
-            using (var reader = new StreamReader(Request.Body))
+            using var reader = new StreamReader(Request.Body);
+            try
             {
-                try
-                {
-                    var body = await reader.ReadToEndAsync();
+                var body = await reader.ReadToEndAsync();
 
-                    TokenInput o = new TokenInput();
-                    o = JsonSerializer.Deserialize<TokenInput>(body);
+                TokenInput o = new TokenInput();
+                o = JsonSerializer.Deserialize<TokenInput>(body);
 
-                    bool x = await IsValidUserNameAndPassword(o.UserName, o.Password);
+                var output = await IsValidUserNameAndPassword(o.UserName, o.Password) ? 
+                    new ObjectResult(await GenerateToken(o.UserName)) 
+                    : (IActionResult)BadRequest();
 
-                    var output = x ? new ObjectResult(await GenerateToken(o.UserName)) : (IActionResult)BadRequest();
-                    return output;
-                    throw new NotImplementedException();
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                return output;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -69,10 +66,10 @@ namespace RMDataApi.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userName), 
-                new Claim(ClaimTypes.NameIdentifier, user.Id), 
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(ClaimTypes.Name, userName),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()), 
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
+                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(JwtConst.LIFETIME)).ToUnixTimeSeconds().ToString())
             };
 
             foreach (var role in roles)
@@ -81,14 +78,14 @@ namespace RMDataApi.Controllers
             }
 
             var token = new JwtSecurityToken(
-                new JwtHeader (
-                    new SigningCredentials(
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XXXMySecretKeyIsSecretSoDoNotTellXXX")), SecurityAlgorithms.HmacSha256)), new JwtPayload(claims));
+                issuer: JwtConst.ISSUER,
+                audience: JwtConst.AUDIENCE,
+                claims: claims,
+                signingCredentials: new SigningCredentials(JwtConst.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             var output = new
             {
-                Access_Token = new JwtSecurityTokenHandler().WriteToken(token)
-                ,
+                Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Username = userName
             };
 

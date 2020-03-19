@@ -31,13 +31,15 @@ namespace RMDataApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "JwtBearer";
@@ -48,14 +50,19 @@ namespace RMDataApi
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XXXMySecretKeyIsSecretSoDoNotTellXXX")),
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+                        IssuerSigningKey = JwtConst.GetSymmetricSecurityKey(),
+                        
+                        ValidateIssuer = true,
+                        ValidIssuer = JwtConst.ISSUER,
+
+                        ValidateAudience = true,
+                        ValidAudience = JwtConst.AUDIENCE,
+                        
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.FromMinutes(5)
                     };
                 });
+
             services.AddSwaggerGen(setup =>
             {
                 setup.SwaggerDoc(
