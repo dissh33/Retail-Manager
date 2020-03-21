@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RMDataApi.Data;
 using RMDataApi.Models;
@@ -37,8 +38,7 @@ namespace RMDataApi.Controllers
             {
                 var body = await reader.ReadToEndAsync();
 
-                TokenInput o = new TokenInput();
-                o = JsonSerializer.Deserialize<TokenInput>(body);
+                TokenInput o = JsonSerializer.Deserialize<TokenInput>(body);
 
                 var output = await IsValidUserNameAndPassword(o.UserName, o.Password) ? 
                     new ObjectResult(await GenerateToken(o.UserName)) 

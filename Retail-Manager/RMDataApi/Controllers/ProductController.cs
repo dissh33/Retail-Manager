@@ -15,12 +15,17 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
+        private readonly IProductData _productData;
+
+        public ProductController(IProductData productData)
+        {
+            _productData = productData;
+        }
+
         [HttpGet]
         public List<ProductModel> Get()
         {
-            ProductData data = new ProductData();
-
-            return data.GetProducts();
+            return _productData.GetProducts();
         }
     }
 }

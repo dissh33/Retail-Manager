@@ -8,14 +8,18 @@ using System.Threading.Tasks;
 
 namespace RMDataManager.Library.DataAccessLogic
 {
-    public class UserData
+    public class UserData : IUserData
     {
+        private readonly ISqlDataAccess _sql;
+
+        public UserData(ISqlDataAccess sqlDataAccess)
+        {
+            _sql = sqlDataAccess;
+        }
 
         public List<UserModel> GetUserById(string id)
         {
-            SqlDataAccess sql = new SqlDataAccess();
-
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id = id }, "RMData");
+            var output = _sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id = id }, "RMData");
 
             return output;
         }

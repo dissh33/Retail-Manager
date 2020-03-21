@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMDataManager", "RMDataManager\RMDataManager.csproj", "{77CED772-742D-4FAF-9511-F94AE94FB072}"
-EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "RMData", "RMData\RMData.sqlproj", "{1FE9A2B9-CD45-4F2D-967B-6FA5B24D4FDD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RMDesktopUI", "RMDesktopUI\RMDesktopUI.csproj", "{61DC57C6-0DBC-40BB-B9A5-096E1EA07911}"
@@ -17,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{BBD22154-4A3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{7B94BE13-E3A7-40B3-A6AB-191615DA7F83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMDataApi", "RMDataApi\RMDataApi.csproj", "{DE504361-8352-45F7-9BDE-2A27F30E47B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RMDataApi", "RMDataApi\RMDataApi.csproj", "{DE504361-8352-45F7-9BDE-2A27F30E47B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{77CED772-742D-4FAF-9511-F94AE94FB072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77CED772-742D-4FAF-9511-F94AE94FB072}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77CED772-742D-4FAF-9511-F94AE94FB072}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77CED772-742D-4FAF-9511-F94AE94FB072}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1FE9A2B9-CD45-4F2D-967B-6FA5B24D4FDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1FE9A2B9-CD45-4F2D-967B-6FA5B24D4FDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FE9A2B9-CD45-4F2D-967B-6FA5B24D4FDD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -56,7 +50,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{77CED772-742D-4FAF-9511-F94AE94FB072} = {BBD22154-4A32-4AB1-B254-F54ACF50CD3C}
 		{61DC57C6-0DBC-40BB-B9A5-096E1EA07911} = {7B94BE13-E3A7-40B3-A6AB-191615DA7F83}
 		{18032952-7898-4468-96A5-B2E1D58AD723} = {BBD22154-4A32-4AB1-B254-F54ACF50CD3C}
 		{265578E3-BA20-42C2-B097-A687DBA7EAA2} = {7B94BE13-E3A7-40B3-A6AB-191615DA7F83}

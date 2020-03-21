@@ -7,15 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace RMDataManager.Library.DataAccess
 {
-    internal class SqlDataAccess : IDisposable
+    public class SqlDataAccess : IDisposable, ISqlDataAccess
     {
+        private readonly IConfiguration _config;
+        private IDbConnection _connection;
+        private IDbTransaction _transaction;
+
+        public SqlDataAccess(IConfiguration config)
+        {
+            _config = config;
+            _config = config;
+        }
         public string GetConnectionString(string name)
         {
-            return @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = RMData; Integrated Security = True; Connect Timeout = 60; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
-            //ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            return _config.GetConnectionString(name);
         }
 
         public List<T> LoadData<T, U>(string storedProcedure, U parameters, string connectionStringName)
@@ -40,9 +49,6 @@ namespace RMDataManager.Library.DataAccess
                     commandType: CommandType.StoredProcedure);
             }
         }
-
-        private IDbConnection _connection;
-        private IDbTransaction _transaction;
 
         public void StartTransaction(string connectionStringName)
         {

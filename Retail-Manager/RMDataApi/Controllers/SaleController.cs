@@ -16,15 +16,20 @@ namespace RMDataApi.Controllers
     [Authorize]
     public class SaleController : ControllerBase
     {
+        private readonly ISaleData _saleData;
+
+        public SaleController(ISaleData saleData)
+        {
+            _saleData = saleData;
+        }
+
         [Authorize(Policy = "CashierRole")]
         [HttpPost]
         public void Post(SaleModel sale)
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            SaleData data = new SaleData();
-
-            data.SaveSale(sale, userId);
+            _saleData.SaveSale(sale, userId);
         }
 
         [Authorize(Policy = "AdminRole,ManagerRole")]
@@ -32,8 +37,7 @@ namespace RMDataApi.Controllers
         [HttpGet]
         public List<SaleReportModel> GetSalesReport()
         {
-            SaleData data = new SaleData();
-            return data.GetSaleReport();
+            return _saleData.GetSaleReport();
         }
     }
 }

@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RMDataManager.Library.DataAccess;
+using RMDataManager.Library.DataAccessLogic;
 
 namespace RMDataApi
 {
@@ -40,6 +42,12 @@ namespace RMDataApi
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IInventoryData, InventoryData>();
+            services.AddScoped<ISqlDataAccess, SqlDataAccess>();
+            services.AddScoped<IProductData, ProductData>();
+            services.AddScoped<ISaleData, SaleData>();
+            services.AddScoped<IUserData, UserData>();
 
             services.AddAuthentication(options =>
                 {

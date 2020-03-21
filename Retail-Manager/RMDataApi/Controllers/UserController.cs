@@ -22,11 +22,13 @@ namespace RMDataApi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserData _userData;
 
-        public UserController(ApplicationDbContext applicationDbContext, UserManager<IdentityUser> userManager)
+        public UserController(ApplicationDbContext applicationDbContext, UserManager<IdentityUser> userManager, IUserData userData)
         {
             _context = applicationDbContext;
             _userManager = userManager;
+            _userData = userData;
         }
 
         [HttpGet]
@@ -34,9 +36,7 @@ namespace RMDataApi.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            UserData data = new UserData();
-
-            return data.GetUserById(userId).First();
+            return _userData.GetUserById(userId).First();
         }
 
 

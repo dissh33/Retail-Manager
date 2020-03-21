@@ -15,18 +15,23 @@ namespace RMDataApi.Controllers
     [Authorize(Policy="AdminRole,ManagerRole")]
     public class InventoryController : ControllerBase
     {
+        private readonly IInventoryData _inventoryData;
+
+        public InventoryController(IInventoryData inventoryData)
+        {
+            _inventoryData = inventoryData;
+        }
+
         [HttpGet]
         public List<InventoryModel> Get()
         {
-            InventoryData data = new InventoryData();
-            return data.GetInventory();
+            return _inventoryData.GetInventory();
         }
 
         [HttpPost]
         public void Post(InventoryModel item)
         {
-            InventoryData data = new InventoryData();
-            data.SaveInventoryRecord(item);
+            _inventoryData.SaveInventoryRecord(item);
         }
     }
 }

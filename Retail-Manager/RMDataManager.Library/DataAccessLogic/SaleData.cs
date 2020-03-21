@@ -8,15 +8,22 @@ using RMDataManager.Library.Models.DbModels;
 
 namespace RMDataManager.Library.DataAccessLogic
 {
-    public class SaleData
+    public class SaleData : ISaleData
     {
+        private readonly ISqlDataAccess _sql;
+        private readonly IProductData _productData;
+
+        public SaleData(ISqlDataAccess sqlDataAccess, IProductData productData)
+        {
+            _sql = sqlDataAccess;
+            _productData = productData;
+        }
+
         public void SaveSale(SaleModel saleInfo, string userId)
         {
             //TODO: Make this solid, dry / better
             
-
             List<DbSaleDetailModel> details = new List<DbSaleDetailModel>();
-            ProductData products = new ProductData();
 
             foreach (var item in saleInfo.SaleDetails)
             {
@@ -27,7 +34,7 @@ namespace RMDataManager.Library.DataAccessLogic
                 };
 
                 //Get the information about this product
-                var productInfo = products.GetProductById(item.ProductId);
+                var productInfo = _productData.GetProductById(item.ProductId);
 
                 if (productInfo == null)
                 {
@@ -50,16 +57,14 @@ namespace RMDataManager.Library.DataAccessLogic
             sale.Total = sale.SubTotal - sale.Discount;
 
             // Save the sale model in Transaction
-            using (SqlDataAccess sql = new SqlDataAccess())
-            {
                 try
                 {
-                    sql.StartTransaction("RMData");
+                    _sql.StartTransaction("RMData");
 
-                    sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
+                    _sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
 
                     // Get id from sale model
-                    sale.Id = sql.LoadDataInTransaction<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }).FirstOrDefault();
+                    sale.Id = _sql.LoadDataInTransaction<int, dynamic>("spSale_Lookup", new { sale.CashierId, sale.SaleDate }).FirstOrDefault();
 
                     //Calculate Discount
                     decimal discountPercent = (sale.Discount * 100) / sale.SubTotal;
@@ -70,25 +75,24 @@ namespace RMDataManager.Library.DataAccessLogic
                         item.Discount = (item.PurchasePrice / 100) * discountPercent;
 
                         //Save the sale details models
-                        sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
+                        _sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
                     }
 
-                    sql.CommitTransaction();
+                    _sql.CommitTransaction();
                 }
                 catch (Exception)
                 {
-                    sql.RollbackTransaction();
+                    _sql.RollbackTransaction();
                     throw;
                 }
-            }
+
+                _sql?.Dispose();
         }
 
 
         public List<SaleReportModel> GetSaleReport()
         {
-            SqlDataAccess sql = new SqlDataAccess();
-
-            var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "RMData");
+            var output = _sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "RMData");
 
             return output;
         }
