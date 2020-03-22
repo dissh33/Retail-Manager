@@ -33,6 +33,7 @@ namespace RMDesktopUI.Library.Api
 
         public void ClearHeaders()
         {
+            ApiClient.DefaultRequestHeaders.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Clear();
         }
     }

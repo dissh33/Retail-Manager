@@ -29,7 +29,7 @@ namespace RMDataApi.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Privacy()
+        public IActionResult Privacy()
         {
             ////Add Roles 
             //string[] roles = { "Manager", "Admin", "Cashier" };

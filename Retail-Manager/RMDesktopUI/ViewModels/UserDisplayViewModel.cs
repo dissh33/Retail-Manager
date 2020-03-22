@@ -146,7 +146,6 @@ namespace RMDesktopUI.ViewModels
         public async Task LoadUsers()
         {
             var userList = await _userEndpoint.GetAll();
-            //Users = new BindingList<UserModel>(userList);
             var users = _mapper.Map<List<UserDisplayModel>>(userList);
             Users = new BindingList<UserDisplayModel>(users);
         }
