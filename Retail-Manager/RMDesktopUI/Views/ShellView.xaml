@@ -13,11 +13,19 @@
                 <MenuItem x:Name="ExitApplication" Header="E_xit" />
             </MenuItem>
 
-            <MenuItem Header="_Account" />
-            <MenuItem Header="_Users">
+            <MenuItem Header="_Account" >
+                <MenuItem x:Name="LogOut" Header="_Log Out" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
+                <MenuItem x:Name="LogIn" Header="_Log In" Visibility="{Binding IsLoggedOut, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
+            </MenuItem>
+
+            <MenuItem  Header="_Sales">
+                <MenuItem x:Name="Sale" Header="_Sales Page"/>
+            </MenuItem>
+            
+            <MenuItem Header="_Admin">
                 <MenuItem x:Name="UserManagement" Header="User _Management" />
             </MenuItem>
-            <MenuItem x:Name="LogOut" Header="_Log Out" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
+                     
         </Menu>
 
         <Grid>

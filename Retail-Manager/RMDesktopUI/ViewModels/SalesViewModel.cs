@@ -11,6 +11,7 @@ using Caliburn.Micro;
 using RMDesktopUI.Library.Models;
 using RMDesktopUI.Library.Api;
 using RMDesktopUI.Models;
+using RMDesktopUI.Helpers;
 
 namespace RMDesktopUI.ViewModels
 {
@@ -25,19 +26,32 @@ namespace RMDesktopUI.ViewModels
 
         private readonly IProductEndpoint _productEndpoint;
         private readonly ISaleEndpoint _saleEndpoint;
+        
         private readonly IMapper _mapper;
+        private readonly IDialogWindowHelper _dialogWindow;
 
-        public SalesViewModel(IProductEndpoint productEndpoint, ISaleEndpoint saleEndpoint, IMapper mapper)
+        public SalesViewModel(IProductEndpoint productEndpoint, ISaleEndpoint saleEndpoint, IMapper mapper, IDialogWindowHelper dialogWindow)
         {
             _productEndpoint = productEndpoint;
             _saleEndpoint = saleEndpoint;
             _mapper = mapper;
+            _dialogWindow = dialogWindow;
         }
 
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            await LoadProducts();
+            try
+            {
+                await LoadProducts();
+            }
+            catch (Exception ex)
+            {
+                await _dialogWindow.ShowSystemError(ex, "Sales page");
+
+                await TryCloseAsync();
+            }
+            
         }
 
         private async Task LoadProducts()

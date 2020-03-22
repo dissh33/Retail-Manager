@@ -43,11 +43,11 @@ namespace RMDataApi
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<IInventoryData, InventoryData>();
-            services.AddScoped<ISqlDataAccess, SqlDataAccess>();
-            services.AddScoped<IProductData, ProductData>();
-            services.AddScoped<ISaleData, SaleData>();
-            services.AddScoped<IUserData, UserData>();
+            services.AddTransient<IInventoryData, InventoryData>();
+            services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+            services.AddTransient<IProductData, ProductData>();
+            services.AddTransient<ISaleData, SaleData>();
+            services.AddTransient<IUserData, UserData>();
 
             services.AddAuthentication(options =>
                 {

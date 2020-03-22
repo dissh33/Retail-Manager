@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <!--Header-->
-        <TextBlock Text="User Administration" FontSize="48" Margin="10 10 0 20" 
+        <TextBlock Text="User Management" FontSize="48" Margin="10 10 0 20" 
                    Grid.ColumnSpan="5" Grid.Row="0" Grid.Column="0" FontFamily="Candara Light"/>
 
         <!--Col 1-->

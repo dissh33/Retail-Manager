@@ -5,9 +5,9 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using AutoMapper;
 using Caliburn.Micro;
+using RMDesktopUI.Helpers;
 using RMDesktopUI.Library.Api;
 using RMDesktopUI.Library.Models;
 using RMDesktopUI.Models;
@@ -16,8 +16,8 @@ namespace RMDesktopUI.ViewModels
 {
     public class UserDisplayViewModel : Screen
     {
-        private readonly StatusInfoViewModel _status;
-        private readonly IWindowManager _window;
+        private readonly IDialogWindowHelper _dialogWindow;
+
         private readonly IUserEndpoint _userEndpoint;
         private readonly IMapper _mapper;
 
@@ -31,10 +31,9 @@ namespace RMDesktopUI.ViewModels
         private string _selectedUsersRoleToRemove;
         private string _selectedAvailableRoleToAdd;
 
-        public UserDisplayViewModel(StatusInfoViewModel status, IWindowManager window, IMapper mapper, IUserEndpoint userEndpoint)
+        public UserDisplayViewModel(IMapper mapper, IUserEndpoint userEndpoint, IDialogWindowHelper dialogWindow)
         {
-            _status = status;
-            _window = window;
+            _dialogWindow = dialogWindow;
             _mapper = mapper;
             _userEndpoint = userEndpoint;
         }
@@ -49,22 +48,8 @@ namespace RMDesktopUI.ViewModels
             }
             catch (Exception ex)
             {
-                dynamic settings = new ExpandoObject();
-                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                settings.ResizeMode = ResizeMode.NoResize;
-                settings.Title = "System Error";
-
-                if (ex.Message.Equals("Unauthorized"))
-                {
-                    _status.UpdateMessage("Access is denied", "You do not have the permission to interact with the Users Form.");
-                    await _window.ShowDialogAsync(_status, null, settings);
-                }
-                else
-                {
-                    _status.UpdateMessage("Fatal Exception", ex.Message);
-                    await _window.ShowDialogAsync(_status, null, settings);
-                }
-
+                await _dialogWindow.ShowSystemError(ex, "User Management page");
+                
                 await TryCloseAsync();
             }
         }
@@ -182,7 +167,7 @@ namespace RMDesktopUI.ViewModels
             UsersRoles.Add(role);
             AvailableRoles.Remove(role);
 
-            SelectedUser.RoleList = string.Join(", ", UsersRoles.Select(x => x));
+            SelectedUser.RoleList = string.Join(", ", UsersRoles);
         }
 
         public bool CanRemoveSelectedRole
@@ -204,7 +189,7 @@ namespace RMDesktopUI.ViewModels
             var ur  = UsersRoles;
             AvailableRoles.Add(role);
 
-            SelectedUser.RoleList = string.Join(", ", UsersRoles.Select(x => x));
+            SelectedUser.RoleList = string.Join(", ", UsersRoles);
         }
     }
 }

@@ -52,7 +52,8 @@ namespace RMDesktopUI
             _container
                 .PerRequest<IProductEndpoint, ProductEndpoint>()
                 .PerRequest<ISaleEndpoint, SaleEndpoint>()
-                .PerRequest<IUserEndpoint, UserEndpoint>();
+                .PerRequest<IUserEndpoint, UserEndpoint>()
+                .PerRequest<IDialogWindowHelper, DialogWindowHelper>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
