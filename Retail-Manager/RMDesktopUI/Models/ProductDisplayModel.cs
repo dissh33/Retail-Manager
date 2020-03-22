@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RMDesktopUI.Models
 {
-    public class ProductDisplayModel :INotifyPropertyChanged
+    public class ProductDisplayModel : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

@@ -36,6 +36,7 @@ namespace RMDesktopUI
             {
                 cfg.CreateMap<ProductModel, ProductDisplayModel>();
                 cfg.CreateMap<CartItemModel, CartItemDisplayModel>();
+                cfg.CreateMap<UserModel, UserDisplayModel>();
             });
 
             var output = config.CreateMapper();

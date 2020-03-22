@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using AutoMapper;
 using Caliburn.Micro;
 using RMDesktopUI.Library.Api;
 using RMDesktopUI.Library.Models;
+using RMDesktopUI.Models;
 
 namespace RMDesktopUI.ViewModels
 {
@@ -17,21 +19,23 @@ namespace RMDesktopUI.ViewModels
         private readonly StatusInfoViewModel _status;
         private readonly IWindowManager _window;
         private readonly IUserEndpoint _userEndpoint;
+        private readonly IMapper _mapper;
 
-        private BindingList<UserModel> _users;
+        private BindingList<UserDisplayModel> _users;
         private BindingList<string> _usersRoles;
         private BindingList<string> _availableRoles = new BindingList<string>();
 
-        private UserModel _selectedUser;
+        private UserDisplayModel _selectedUser;
         private string _selectedUserName;
         
         private string _selectedUsersRoleToRemove;
         private string _selectedAvailableRoleToAdd;
 
-        public UserDisplayViewModel(StatusInfoViewModel status, IWindowManager window, IUserEndpoint userEndpoint)
+        public UserDisplayViewModel(StatusInfoViewModel status, IWindowManager window, IMapper mapper, IUserEndpoint userEndpoint)
         {
             _status = status;
             _window = window;
+            _mapper = mapper;
             _userEndpoint = userEndpoint;
         }
 
@@ -65,7 +69,7 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        public BindingList<UserModel> Users
+        public BindingList<UserDisplayModel> Users
         {
             get => _users;
             set
@@ -75,7 +79,7 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        public UserModel SelectedUser
+        public UserDisplayModel SelectedUser
         {
             get => _selectedUser;
             set
@@ -96,6 +100,7 @@ namespace RMDesktopUI.ViewModels
                 _selectedUsersRoleToRemove = value;
                 NotifyOfPropertyChange(() => SelectedUsersRoleToRemove);
                 NotifyOfPropertyChange(() => Users);
+                NotifyOfPropertyChange(() => CanRemoveSelectedRole);
             }
         }
         public string SelectedAvailableRoleToAdd
@@ -106,6 +111,7 @@ namespace RMDesktopUI.ViewModels
                 _selectedAvailableRoleToAdd = value;
                 NotifyOfPropertyChange(() => SelectedAvailableRoleToAdd);
                 NotifyOfPropertyChange(() => Users);
+                NotifyOfPropertyChange(() => CanAddSelectedRole);
             }
         }
         public string SelectedUserName
@@ -140,7 +146,9 @@ namespace RMDesktopUI.ViewModels
         public async Task LoadUsers()
         {
             var userList = await _userEndpoint.GetAll();
-            Users = new BindingList<UserModel>(userList);
+            //Users = new BindingList<UserModel>(userList);
+            var users = _mapper.Map<List<UserDisplayModel>>(userList);
+            Users = new BindingList<UserDisplayModel>(users);
         }
 
         private async Task LoadRoles()
@@ -157,6 +165,14 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
+        public bool CanAddSelectedRole
+        {
+            get
+            {
+                var output = SelectedAvailableRoleToAdd != null;
+                return output;
+            }
+        }
         public async void AddSelectedRole()
         {
             UserRolePairModel pairing = new UserRolePairModel(SelectedUser.Id, SelectedAvailableRoleToAdd);
@@ -166,8 +182,18 @@ namespace RMDesktopUI.ViewModels
 
             UsersRoles.Add(role);
             AvailableRoles.Remove(role);
+
+            SelectedUser.RoleList = string.Join(", ", UsersRoles.Select(x => x));
         }
 
+        public bool CanRemoveSelectedRole
+        {
+            get
+            {
+                var output = SelectedUsersRoleToRemove != null;
+                return output;
+            }
+        }
         public async void RemoveSelectedRole()
         {
             UserRolePairModel pairing = new UserRolePairModel(SelectedUser.Id, SelectedUsersRoleToRemove);
@@ -175,8 +201,11 @@ namespace RMDesktopUI.ViewModels
 
             await _userEndpoint.RemoveUserFromRole(pairing);
 
-            UsersRoles.Remove(role);
+            var r = UsersRoles.Remove(role);
+            var ur  = UsersRoles;
             AvailableRoles.Add(role);
+
+            SelectedUser.RoleList = string.Join(", ", UsersRoles.Select(x => x));
         }
     }
 }
